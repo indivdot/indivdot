@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
-  {% include head.html %}
+	{% include head.html %}
 
-  <body>
+<body>
+	<div class="container">
 
-    {% include header.html %}
-
-    <div class="page-content">
-      <div class="wrapper">
-        {{ content }}
-      </div>
-    </div>
-
-    {% include footer.html %}
-
-  </body>
+{% include header.html %}
+	<div class="content">
+		<div class="wrap">
+{{ content }} 
+		</div>
+	</div>
+{% include footer.html %}
+	</div>
+</body>
 
 </html>

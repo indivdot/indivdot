@@ -6,8 +6,10 @@
     @extend %vertical-rhythm;
 
     .highlighter-rouge & {
-      background: #eef;
+      background: #000;
     }
+
+
 
     .c     { color: #998; font-style: italic } // Comment
     .err   { color: #a61717; background-color: #e3d2d2 } // Error
@@ -44,7 +46,7 @@
     .ne    { color: #900; font-weight: bold } // Name.Exception
     .nf    { color: #900; font-weight: bold } // Name.Function
     .nn    { color: #555 } // Name.Namespace
-    .nt    { color: #000080 } // Name.Tag
+    .nt    { color: #00979D; } // Name.Tag
     .nv    { color: #008080 } // Name.Variable
     .ow    { font-weight: bold } // Operator.Word
     .w     { color: #bbb } // Text.Whitespace
@@ -69,3 +71,12 @@
     .vi    { color: #008080 } // Name.Variable.Instance
     .il    { color: #099 } // Literal.Number.Integer.Long
 }
+
+ .highlighter-rouge{
+         margin: 0 2px;
+    padding: 2px 5px;
+    width: 100%;
+    background: #f3f5f6;
+    border: 1px solid #e1e4e6;
+    border-radius: 2px;
+    }

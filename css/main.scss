@@ -3,20 +3,24 @@
 ---
 @charset "utf-8";
 
-
-
 // Our variables
-$base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$base-font-size:   16px;
-$base-font-weight: 400;
+//$base-font-family: 'Spoqa Han Sans', 'Nanum Barun Gothic', 'Apple SD Gothic Neo', 'Apple SD 산돌고딕 Neo', 'Nanum Barun Gothic', '나눔 바른 고딕', 'Nanum Gothic', '나눔 고딕', 'Malgun-Gothic', '맑은 고딕', Dotum, 돋움, Verdana, Arial, sans-serif;
+$base-font-family: 'Noto Sans', sans-serif;
+$base-font-size:   1.4rem;
+$base-font-weight: 200;
 $small-font-size:  $base-font-size * 0.875;
-$base-line-height: 1.5;
+$base-line-height: 2.6rem;
 
-$spacing-unit:     30px;
+$spacing-unit:     1rem;
 
-$text-color:       #111;
-$background-color: #fdfdfd;
-$brand-color:      #2a7ae2;
+$text-color:       #3d3d3d;
+$background-color: #ebebeb;
+
+// $brand-color:      #0056ff;
+$brand-color:      #ff0000;
+$brand-color-light: lighten($brand-color, 47%);
+$brand-color-lighter: lighten($brand-color, 49%);
+$brand-color-dark:  darken($brand-color, 30%);
 
 $grey-color:       #828282;
 $grey-color-light: lighten($grey-color, 40%);
@@ -25,8 +29,10 @@ $grey-color-dark:  darken($grey-color, 25%);
 // Width of the content area
 $content-width:    800px;
 
-$on-palm:          600px;
-$on-laptop:        800px;
+$on-mobile:        480px;
+$on-palm:          730px;
+$on-laptop:        980px;
+$on-retina:        1600px;
 
 
 
@@ -38,7 +44,7 @@ $on-laptop:        800px;
 //     }
 // }
 @mixin media-query($device) {
-    @media screen and (max-width: $device) {
+    @media screen and (min-width: $device) {
         @content;
     }
 }

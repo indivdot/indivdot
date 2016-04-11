@@ -1,0 +1,148 @@
+---
+layout: post
+title:  "웹폰트 경량화"
+date:   2016-04-02
+categories: 웹
+description: 웹 타이포그래피. 웹폰트 경량화해서 사용하기
+---
+
+## 웹과 타이포그래피
+웹페이지는 문서이기 때문에 타이포그래피는 매우 중요하다. 타이포그래피는 화면의 전체 느낌을 다르게 보이게 한다. 하지만 웹의 특성상 타이포그래피에 제한적인 부분이 많다. 사용자의 로컬에 폰트패밀리가 존재하는지 알수없어서 원하는 폰트(아름다운 폰트)를 쓸수가 없고, 브라우저마다 랜더링이 조금씩 다르기 때문에 미세한 디자인이 어려워서 이미지 텍스트를 많이 사용하곤 했다. 
+
+하지만 이미지 텍스트에는 많은 문제가 있다. 
+
+1. 웹페이지의 컨텐츠 수정이 번거롭다. 
+1. 번역 기능, 텍스트 리더기의 사용이 어렵다. 
+1. 화면을 축소하거나 확대할 경우에 이미지가 깨진다. 
+1. 복사가 불가능하다. 
+1. 다양한 플랫폼에서 접속하는 경우가 늘고 있고, 레티나 디스플레이에 맞춰 고해상도의 이미지가 필요하다.
+
+이러한 여러 이유들 때문에 이미지 텍스트의 사용은 줄고 있고 웹폰트의 사용이 더 필요했다. 웹폰트를 제공하면 브라우저에서 폰트 패밀리를 다운받아 사용자에게 모두 같은 폰트를 제공할 수 있다. 구글 폰트등 CDN 링크 방식으로 폰트를 제공하거나, 서버에서 폰트를 제공하는 방식을 사용한다. 
+
+이렇게 웹폰트의 사용이 늘어나고 있지만, 웹폰트도 단점이 있다. 제일 큰 문제점은 웹폰트를 다운받는 시간동안 텍스트가 보이지 않고, **용량이 커서 웹의 퍼포먼스가 떨어진다는 점**이다. 특히 한글의 경우 완성형 글꼴이기 때문에 더 용량이 크다. 그래서 웹폰트 경량화가 필요하다. 
+
+## Noto Sans CJK
+나는 Noto Sans CJK를 블로그에 적용하고 싶었다. Noto Sans CJK은 폰트 자체도 잘 디자인 되어 있고, 오픈소스로 사용하기 좋다. 특히 폰트 굵기가 다양한 것이 제일 맘에 들었다. 폰트를 너무 많이 쓰게 되면 화면이 지저분해질 경우가 많은데, 또 모두 같은 폰트로 사이즈만 다른것 보다는 굵기로 변화와 구분하면 더 좋은 디자인을 할 수 있다고 생각했기 때문이다. 
+
+Noto Sans CJK는 구글과 어도비, 그리고 동아시아의 여러 글꼴 회사와 합작해서 오픈소스로 공개한 폰트이다. 구글에서는 Noto Sans, 어도비에서는 Source Han Sans, 한국어로는 본고딕이라고 부른다. 더 자세한 내용은 [나무위키](https://namu.wiki/w/Source%20Han%20Sans?from=Noto%20Sans%20CJK){:target="_blank"}에서 확인할 수 있다.
+
+## Noto Sans 웹폰트 적용하기
+웹폰트를 가장 쉽게 사용하는 방법은 구글에서 제공하는 [구글 웹폰트](https://www.google.com/fonts){:target="_blank"}를 사용하는 것이다. 구글 폰트에서도 다양한 한국어를 제공한다. 나눔고딕, 나눔명조, 나눔브러쉬, 나눔펜, 한나체, 제주명조 등 10가지의 한글 폰트를 제공한다. 그리고 Noto Sans도 제공한다. CSS파일에 import하면 하면 본고딕을 쓸 수 있다.[^1]
+
+{% highlight css %}
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+font-family: 'Noto Sans KR', sans-serif;
+{% endhighlight %}
+
+
+아니면, 폰트를 다운받아 서버에서 제공하는 방법을 쓸 수도 있다. [google noto fonts](http://www.google.com/get/noto/#sans-kore){:target="_blank"}에서 한중일 폰트를 다운받아 사용하면 된다. 
+
+## 웹폰트 서브셋
+Noto Sans를 다운받아보면 알겠지만 굵기에 따른 7개의 폰트는 용량이 115.6MB나 된다. 거의 모든 글리프를 지원하기 때문이다.[^2]
+
+그래서 서브셋이 필요하다. 특정 글리프만 골라내서 폰트를 만드는 것이 서브셋의 개념이라고 볼 수 있다. 구글에서 제공하는 Noto sans도 서브셋이 있다. [구글 웹폰트 noto sans KR](https://www.google.com/fonts/earlyaccess#Noto+Sans+KR){:target="_blank"}을 보면 마지막 download를 눌러 폰트를 받으면 한국어 서브셋 폰트를 사용 할 수 있다. 하지만 이 파일 역시 24MB정도로 용량이 크다. 
+
+결국 직접 서브셋을 지정하여 경량화하기로 했다. 인터넷에 많은 블로그들에서 경량화된 폰트를 제공하는데 내가 원하는 서브셋이 필요했고, 한번 나도 만들어보자하는 마음에서 서브셋을 지정해 경량화를 해보기로 했다. 
+
+## 서브셋의 구성
+보통 완성형 한글과 특수문자(괄호, 수학기호, 단위기호, 도형문자, 괘선문자, 원문자, 괄호문자, 전각 숫자 등) 영문 대소문자의 구성으로 이루어질 수 있다. 
+[KS X 1001의 한글 부분표](https://ko.wikipedia.org/wiki/KS_X_1001_%ED%95%9C%EA%B8%80_%EB%B6%80%EB%B6%84_%ED%91%9C){:target="_blank"}와 
+[KS X 1001의 특수 문자](https://ko.wikipedia.org/wiki/KS_X_1001%EC%9D%98_%ED%8A%B9%EC%88%98_%EB%AC%B8%EC%9E%90){:target="_blank"}
+를 참고하면 된다. 
+
+[백괴사전 KS X 1001](https://uncyclopedia.kr/wiki/KS_X_1001#KS_X_1001_.ED.95.9C.EA.B8.80_2350.EC.9E.90){:target="_blank"}을 KS X 1001이 한글 2,350자만 지원하기 때문에 표준어이지만 KS X 1001에 없어서 표시할 수 없는 단어·글자등 문제점을 제시하고 있다. 
+그리고 유니코드에서는 1996년 7월에 유니코드에서 기존의 한글 완성자를 삭제하고 11,172의 새 한글 완성자 영역을 새로 지정하였다고 한다. 유니코드에서 지정한 11,172개의 한글 완성자는 [유니코드 캐릭터 코드 차트](http://www.unicode.org/charts/PDF/UAC00.pdf){:target="_blank"}에서 볼 수 있다.[^3]
+
+## Noto Sans 경량화하기
+
+### 경량화 준비 
+
+Coderifleman님의 [한글 웹폰트 경량화해 사용하기](https://spoqa.github.io/2015/10/14/making-spoqa-han-sans.html){:target="_blank"}와 스포카 기술 블로그의 [스포카 한 산스의 글꼴 경량화](http://blog.coderifleman.com/post/111825720099/){:target="_blank"} 포스트를 보면 글꼴 커스텀 앱으로 특정한 유니코드 범위를 파악해 그 범위 안에 드는 글리프를 삭제하는 방법과 서브셋 폰트 메이커를 사용해 남길 글리프를 지정하는 방법이 설명되어 있다. 데모로 받은 내 폰트랩 스튜디오는 수정하고 폰트를 저장하면 데모 버전이라 그런지 아님 뭔가 이상이 있는지 폰트가 깨져서 사용하지 못했다. _indivdot font를 만들려고 했었는데.. 다른 프로그램을 찾아봐야 할듯하다._ 그래서 비교적 쉬운 [서브셋 폰트 메이커](http://opentype.jp/subsetfontmk.htm){:target="_blank"}와 [WOFF 컨버터](http://opentype.jp/woffconv.htm){:target="_blank"}를 사용하는 방법을 사용하기로 하였다. 
+
+### 경량화 시작하기
+
+<div class="col2">
+	<div class="col-item">
+		<img src="/assets/images/{{ page.date | date: "%Y-%m-%d" }}/subset-font-maker-capture-01.png" alt="">
+	</div>
+	<div class="col-item">
+		<ol>
+			<li>먼저 서브셋 폰트 메이커를 실행시킨다. </li>
+			<li>1-1, 1-2 버튼은 가져올 폰트를 불러오는 것이다. 1-1은 내 PC에 설치되어 있는 폰트를 불러오고, 1-2는 설치되어 있지 않은 폰트를 불러올수 있다. </li>
+			<li>2번 버튼을 눌러서 새로운 폰트를 저장할 경로를 지정한다. </li>
+			<li>3번에는 내가 원하는 서브셋을 지정한다. <em>나는 일단 유니코드 11,172개와 특수문자를 포함해서 만들어 보기로 했다.</em></li>
+			<li>4에는 파일명이 아닌 폰트 패밀리의 이름을 지정하는 것이다. </li>
+			<li>5번 체크박스를 체크하면 폰트 파일이 생성된 후 WOFF 컨버터가 자동으로 실행되게 한다. </li>
+			<li>버튼을 눌러 변환한다. </li>
+		</ol>
+	</div>
+</div>
+<div class="col2">
+	<div class="col-item">
+		<img src="/assets/images/{{ page.date | date: "%Y-%m-%d" }}/subset-font-maker-capture-02.png" alt="">
+	</div>
+	<div class="col-item">
+		<ol>
+			<li>서브셋 폰트 메이커에서 WOFF 컨버터를 자동으로 실행되게 했기 때문에 1번 영역은 입력되어 있다. <em>필요한 경우 파일을 또 불러오면 된다.</em></li>
+			<li>2번 버튼을 눌러서 새로운 폰트를 저장할 경로를 지정한다. </li>
+			<li>체크박스는 기본으로 체크되어 있는데, eot파일을 같이 생성하는 것이다. </li>
+			<li>버튼을 눌러 변환한다.</li>
+		</ol>
+	</div>
+</div>
+<div class="col2">
+	<div class="col-item">
+		<img src="/assets/images/{{ page.date | date: "%Y-%m-%d" }}/subset-font-maker-capture-03.png" alt="">
+	</div>
+	<div class="col-item">
+		<ul>
+			<li>성공적으로 변환에 성공했다.</li>
+		</ul>
+	</div>
+</div>
+<div class="col2">
+	<div class="col-item">
+		<img src="/assets/images/{{ page.date | date: "%Y-%m-%d" }}/subset-font-maker-capture-04.png" alt="">
+	</div>
+	<div class="col-item">
+		<ul>
+			<li>이렇게 용량이 48.7MB에서 2.5MB이런 방법으로 거의 1/20로 용량을 줄인것을 알 수 있다. 나는 Light, Regular, Bold 이렇게 세개의 굵기를 이용하여 웹폰트를 만들었다.</li>
+		</ul>
+	</div>
+</div>
+
+
+
+## 경량화된 웹폰트 사용하기
+
+{% highlight css %}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Noto Sans CJK KR Regular'), local('Noto Sans CJK KR-Regular'), local('NotoSansCJKKR Regular');
+  src: url(/assets/font/NotoSansCJKkr-Regular-subset.eot);
+  src: url(/assets/font/NotoSansCJKkr-Regular-subset.eot?#iefix) format('embedded-opentype'),
+       url(/assets/font/NotoSansCJKkr-Regular-subset.woff) format('woff'),
+       url(/assets/font/NotoSansCJKkr-Regular-subset.otf) format('truetype');
+}
+{% endhighlight %}
+만들어진 폰트는 `@font-face` 정의를 통해 CSS에서 `font-family`로 사용할 수 있다. 나는 위와 같이 사용했다. 
+폰트 페이스를 사용할때 브라우져별, 버전별로 지원하는 폰트 포맷이 다르고 용량때문에 속도의 문제도 생기기때문에 최적의 대응을 위한 방법이 있다. 위에 내가 쓴 방법은 흔히 알려진 방법을 쓴 것이고 다음에 폰트 페이스가 어떻게 이루어지는지, 무엇때문에 저렇게 정리가 되는지에 대한 것은 다른 포스트에서 따로 정리하기로 했다. 
+
+## 마지막으로
+
+이렇게 경량화 된 Noto Sans를 사용하게 되었는데, ie나 window os를 아직 살펴보지 못해서 오류가 있는지 전부 확인해 보지 못했다. 힌팅이나 폰트 굵기 앤티앨리싱 문제가 있다고 하는데 전부 살펴보지 못해서, 나중에 window PC에서 확인하고 문제를 해결해야 될듯하다. 이것 역시 다른 포스트에서 따로 정리해야 될 듯. 
+
+## 참조 또는 더 알아보기
+{:.reference}
+
+- [Noto Sans CJK](http://www.google.com/get/noto/#sans-kore){:target="_blank"}
+- [한글 웹폰트 경량화해 사용하기](http://blog.coderifleman.com/post/111825720099/){:target="_blank"}
+- [스포카 한 산스](http://www.spoqa-han-sans.com/){:target="_blank"}
+- [스포카 한 산스와 글꼴 경량화](https://spoqa.github.io/2015/10/14/making-spoqa-han-sans.html){:target="_blank"}
+{:.reference-list}
+
+[^1]: [Googole Developers Korea Blog](http://googledevkr.blogspot.kr/2015/10/noto.html){:target="_blank"}에 따르면 한중일 다국페이지에도 사용할 수 있게 하는 방법도 적혀 있다.
+[^2]: noto sans는 no more tofu에서 따온것으로 글리프가 없어서 ◻︎형태로 나오는 것을 방지하는 두부라고 말한다고 하는데, 이것을 없애자는 것이 noto 폰트의 지향점이라고 한다. 
+[^3]: [백괴사전 한글 목록](https://uncyclopedia.kr/wiki/%ED%95%9C%EA%B8%80_%EB%AA%A9%EB%A1%9D){:target="_blank"}에서는 코드없이 한글목록만 볼 수 있다.

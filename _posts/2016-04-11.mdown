@@ -1,0 +1,125 @@
+
+웹폰트는 `@font-face`를 이용하여 적용할 수 있다. `@font-face`는 사용자의 PC에 설치되지 않은 폰트를 서버에서 내려받아 사용하는 방법이다. 마이크로 소프트가 IE 브라우저에서 사용하던 것인데 W3C에 제안하여 CSS3 표준 초안이 되었다고 한다. 
+
+### 브라우저 지원
+
+<table>
+	<caption>브라우저별 웹폰트 글꼴파일 지원</caption>
+	<colgroup>
+		<col width="15%">
+		<col width="">
+		<col width="">
+		<col width="">
+		<col width="">
+		<col width="">
+		<col width="">
+	</colgroup>
+	<thead>
+		<tr>
+			<th></th>
+			<th>크롬</th>
+			<th>엣지</th>
+			<th>인터넷 익스플로러</th>
+			<th>파이어폭스</th>
+			<th>사파리</th>
+			<th>오페라</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>최신 버전</td>
+			<td>49.0 이상</td>
+			<td>25.0 이상</td>
+			<td>11</td>
+			<td>45.0 이상</td>
+			<td>9.1 이상</td>
+			<td>36.0 이상</td>
+		</tr>
+		<tr>
+			<td>EOT</td>
+			<td>지원 안함</td>
+			<td>12.0</td>
+			<td>6.0</td>
+			<td>지원 안함</td>
+			<td>지원 안함</td>
+			<td>지원 안함</td>
+		</tr>
+		<tr>
+			<td>TTF/OTF</td>
+			<td>4.0</td>
+			<td>12.0</td>
+			<td>9.0</td>
+			<td>3.5</td>
+			<td>3.1</td>
+			<td>10</td>
+		</tr>
+		<tr>
+			<td>SVG</td>
+			<td>4.0</td>
+			<td>지원 안함</td>
+			<td>지원 안함</td>
+			<td>지원 안함</td>
+			<td>3.2</td>
+			<td>9.0</td>
+		</tr>
+		<tr>
+			<td class="cell-em">WOFF</td>
+			<td class="cell-em">5.0</td>
+			<td class="cell-em">12.0</td>
+			<td class="cell-em">9.0</td>
+			<td class="cell-em">3.6</td>
+			<td class="cell-em">5.1</td>
+			<td class="cell-em">11.1</td>
+		</tr>
+		<tr>
+			<td>WOFF2</td>
+			<td>36.0</td>
+			<td>지원 안함</td>	
+			<td>지원 안함</td>
+			<td>35.0</td>
+			<td>지원 안함</td>
+			<td>26.0</td>
+		</tr>
+	</tbody>
+</table>
+브라우져별 지원 상황을 보면 WOFF 형식이 모든 브라우저를 지원한다. 하지만 ie9부터 지원되기 때문에 ie 6~8을 대응하려면 EOT 형식도 써야한다. 
+
+### font-face 구성
+
+font-face의 가장 기본 구성은 아래와 같다.
+{% highlight css %}
+@font-face {
+	font-family: FontName; /*폰트 이름*/
+	font-weight: 400; /*폰트 굵기*/
+	font-style: normal; /*폰트 스타일*/
+	src: url(fontName.woff); /*폰트 경로*/
+}
+div{
+	font-family: FontName;
+}
+{% endhighlight %}
+
+font-face에 font-family에 CSS에서 사용할 폰트 이름을 적고(로컬에서 사용하는 이름과 비슷하되, 다르게 적는 것이 좋다고 한다.), url()을 사용해 웹폰트의 경로를 지정해준다. 
+
+
+{% highlight css %}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Noto Sans CJK KR Regular'), local('Noto Sans CJK KR-Regular'), local('NotoSansCJKKR Regular');
+  src: url(/assets/font/NotoSansCJKkr-Regular-subset.eot);
+  src: url(/assets/font/NotoSansCJKkr-Regular-subset.eot?#iefix) format('embedded-opentype'),
+       url(/assets/font/NotoSansCJKkr-Regular-subset.woff) format('woff'),
+       url(/assets/font/NotoSansCJKkr-Regular-subset.otf) format('truetype');
+}
+{% endhighlight %}
+
+
+## 참조 또는 더 알아보기
+{:.reference}
+
+
+- [웹폰트 파헤치기](http://beautifulcss.com/archives/431){:target="_blank"}
+- (https://developer.mozilla.org/ko/docs/Web/CSS/@font-face)
+{:.reference-list}

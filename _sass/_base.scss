@@ -1,19 +1,31 @@
+::selection { background:#eee; color:$brand-color; }
+::-moz-selection { background:#eee; color:$brand-color; }
+
+
 /**
  * Reset some basic elements
- */
+
 body, h1, h2, h3, h4, h5, h6,
 p, blockquote, pre, hr,
 dl, dd, ol, ul, figure {
     margin: 0;
     padding: 0;
 }
-
+ */
 
 
 /**
  * Basic styling
  */
+html{
+    font-size: 10px;
+	@include media-query($on-laptop) {
+		font-size: 12px;
+	}
+}
 body {
+    margin: 0;
+    padding: 0;
     font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
     color: $text-color;
     background-color: $background-color;
@@ -23,6 +35,8 @@ body {
     -o-font-feature-settings: "kern" 1;
     font-feature-settings: "kern" 1;
     font-kerning: normal;
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
 }
 
 
@@ -34,7 +48,8 @@ h1, h2, h3, h4, h5, h6,
 p, blockquote, pre,
 ul, ol, dl, figure,
 %vertical-rhythm {
-    margin-bottom: $spacing-unit / 2;
+    /*margin-bottom: $spacing-unit / 2;*/
+
 }
 
 
@@ -91,16 +106,20 @@ h1, h2, h3, h4, h5, h6 {
  * Links
  */
 a {
-    color: $brand-color;
+    color: $text-color ;
     text-decoration: none;
+    outline: 0;
 
     &:visited {
-        color: darken($brand-color, 15%);
+        color: $text-color;
     }
 
     &:hover {
-        color: $text-color;
-        text-decoration: underline;
+        color: $brand-color;
+        text-decoration: none;
+        // -webkit-transition: all 0.3s ease-out; 
+        // -moz-transition: all 0.3s ease-out; 
+        // transition: all 0.3s ease-out;
     }
 }
 
@@ -110,16 +129,14 @@ a {
  * Blockquotes
  */
 blockquote {
+    margin: 0;
+    padding: $spacing-unit $spacing-unit*2;
+    background: #F9F9F9;
+    border-left: 5px solid $grey-color-light;
+    font-size: 0.9em;
     color: $grey-color;
-    border-left: 4px solid $grey-color-light;
-    padding-left: $spacing-unit / 2;
-    font-size: 18px;
-    letter-spacing: -1px;
-    font-style: italic;
 
-    > :last-child {
-        margin-bottom: 0;
-    }
+
 }
 
 
@@ -129,10 +146,9 @@ blockquote {
  */
 pre,
 code {
-    font-size: 15px;
-    border: 1px solid $grey-color-light;
-    border-radius: 3px;
-    background-color: #eef;
+    font-family: "Source Code Pro", Consolas, "Letter Gothic Std", Courier, "Nanum Gothic Coding", monospace;
+    font-size: $base-font-size - 0.2;
+
 }
 
 code {
@@ -150,26 +166,48 @@ pre {
     }
 }
 
-
+.container{
+    max-width: 980px;
+    margin:0 auto;
+    background: #fff;
+    height: 100%
+}
 
 /**
  * Wrapper
  */
-.wrapper {
-    max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
-    max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: $spacing-unit;
-    padding-left: $spacing-unit;
-    @extend %clearfix;
+.wrap {
+    //max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
+    //max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
+    //margin-right: auto;
+    //margin-left: auto;
+    padding-right: $spacing-unit * 2;
+    padding-left: $spacing-unit * 2;
+    //@extend %clearfix;
 
-    @include media-query($on-laptop) {
-        max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit}));
-        max-width:         calc(#{$content-width} - (#{$spacing-unit}));
-        padding-right: $spacing-unit / 2;
-        padding-left: $spacing-unit / 2;
+    // @include media-query($on-) {
+    //     max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit}));
+    //     max-width:         calc(#{$content-width} - (#{$spacing-unit}));
+    //     padding-right: $spacing-unit / 2;
+    //     padding-left: $spacing-unit / 2;
+    // }
+    @include media-query($on-mobile) {
+        padding-left: $spacing-unit * 3;
+        padding-right: $spacing-unit * 3;
     }
+    @include media-query($on-palm) {
+        padding-left: $spacing-unit * 4;
+        padding-right: $spacing-unit * 4;
+    }
+    @include media-query($on-laptop) {
+        padding-left: $spacing-unit * 5;
+        padding-right: $spacing-unit * 5;
+    }
+    @include media-query($on-retina) {
+        padding-left: $spacing-unit * 6;
+        padding-right: $spacing-unit * 6;
+    }
+
 }
 
 

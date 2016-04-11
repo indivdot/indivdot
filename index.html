@@ -1,23 +1,22 @@
 ---
 layout: default
 ---
-
-<div class="home">
-
-  <h1 class="page-heading">블로그 테스트</h1>
-
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
-</div>
+		
+				<h1 class="page-heading">인디브도트 블로그</h1>
+				<div class="post-list">
+					{% for post in site.posts %}
+					<article class="post">
+						<h3 class="post-title">{{ post.title }}</h3>
+						<div class="post-meta">
+							<p>{{ post.date | date: "%Y-%m-%d" }}</p>
+							
+						</div>
+						<div class="post-description">
+							<p>{{ post.description}}</p>
+						</div>
+						<div class="post-link">
+							<a href="{{ post.url | prepend: site.baseurl }}">자세히 보기</a>  
+						</div>
+					</article>
+					{% endfor %}
+				</div>

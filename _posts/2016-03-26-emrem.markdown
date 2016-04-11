@@ -1,0 +1,141 @@
+---
+layout: post
+title:  "반응형 웹을 위한 rem 단위로 디자인하기"
+date:   2016-03-26 20:50:20 +0900
+categories: css
+description: 블로그를 반응형으로 만드는 과정에서 몇가지 이슈가 생겼다. em과 rem의 차이를 이해는 했지만, 어떻게 써야 제일 좋은 방법인가 헷갈린 다는 것이다. 몇가지 테스트로 em과 rem의 차이를 알아보는 글을 작성하기로 하였다. 
+---
+
+## em과 rem은 무엇인가? 
+
+[w3c의 css3 스펙 중 distance unit](https://www.w3.org/TR/css3-values/#lengths){:target="_blank"}을 살펴봤다. css의 거리 단위는 크게 상대적 길이와 절대적 길이가 있다. **상대적 길이는 em, ex, ch, rem, vw, vh, vmin, vmax**가 있고 **절대적 길이는 cm, mm, q, in, pt, pc, px**가 있다. 대개 크로스 브라우징이나 쉬운 계산 때문에 강제적으로 길이를 px로 많이 사용한다. 여러 디바이스를 모두 대응해야 하는 문제 때문에 em을 사용하기도 했는데, css3에는 rem이라는 새로운 거리 단위를 지원하게 되었다.
+
+<table>
+	<caption>기준에 따른 상대적 길이</caption>
+	<colgroup>
+		<col width="15%">
+		<col width="">
+		<col width="25%">
+	</colgroup>
+	<thead>
+		<tr>
+			<th>단위</th>
+			<th>설명</th>
+			<th>기준점</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="cell-em">*em</td>
+			<td class="cell-em">엘리먼트의 폰트 사이즈</td>
+			<td rowspan="4" class="border-dark">글자 크기</td>
+		</tr>
+		<tr>
+			<td>ex</td>
+			<td>엘리먼트의 폰트의 x(소문자) 높이 값</td>
+		</tr>
+		<tr>
+			<td>ch</td>
+			<td>엘리먼트 폰트의 0(숫자)glyphs의 가로값</td>
+		</tr>
+		<tr>
+			<td class="border-dark cell-em">*rem</td>
+			<td class="border-dark cell-em">루트 엘리먼트의 폰트 사이즈</td>
+		</tr>
+		<tr>
+			<td>vw</td>
+			<td>뷰포트 너비의 1%</td>
+			<td rowspan="4">화면 크기</td>
+		</tr>
+		<tr>
+			<td>vh</td>
+			<td>뷰포트 높이의 1%</td>
+		</tr>
+		<tr>
+			<td>vmin</td>
+			<td>뷰포트의 중 작은 크기의 1%</td>
+		</tr>
+		<tr>
+			<td>vmax</td>
+			<td>뷰포트의 중 큰 크기의 1%</td>
+		</tr>
+	</tbody>
+</table>
+
+스펙과 다른 글들을 통해 내가 이해한 내용이다. 다른 상대적 길이 단위를 이용하면 좀 더 가변적인 디자인이 가능 할 것 같다. 하지만 영어 해석이 좀 어려워서 일단은 em과 rem에 집중하기로 했다. 
+
+
+## em과 rem은 왜 쓰는가?
+
+상대적 길이 단위를 쓰는 이유는 물론 **가변적 디자인**을 하기 위해서이다. 유연한 디자인과 유지보수의 편리함. 또 어느 디바이스 어떤 상황에서도 사용자에게 같은 컨텐츠를 제공할 수 있다. 반응형 웹이나 웹 표준, 웹 접근성 모두 같은 맥락이라고 볼 수 있다.
+자세한 내용은 인터넷의 많은 글에서 찾아 볼 수 있다.
+
+## em과 rem의 차이점
+					
+em과 rem의 가장 큰 차이점은 **기준**이 무엇이냐는 것이다. 
+em은 상위 엘리먼트의 폰트 사이즈가 기준이고, rem은 루트 엘리먼트(html)의 폰트 사이즈가 기준이 된다. 
+아래 예를 들었다. 
+
+이런 html이 있다고 가정할 때
+
+{% highlight html%}
+<div>
+    <p>안녕하세요. 인디브도트입니다.</p>
+</div>
+{% endhighlight %}
+
+<div class="col2">
+<div class="col-item">
+em을 썼을때
+{% highlight css%}
+html{font-size:10px;}
+div{font-size:2em;}
+p{font-size:1em;}
+{% endhighlight %}
+<img src="/assets/images/{{ page.date | date: "%Y-%m-%d" }}/1em.gif" alt="em을 썼을때">
+</div>
+<div class="col-item">
+rem을 썼을때
+{% highlight css%}
+html{font-size:10px;}
+div{font-size:2em;}
+p{font-size:1rem;}
+{% endhighlight %}
+<img src="/assets/images/{{ page.date | date: "%Y-%m-%d" }}/1rem.gif" alt="rem을 썼을때">
+</div>
+</div>
+
+
+둘의 차이는 p 엘리먼트에 em, rem 단위 밖에 없지만 결과적으로는 10px과 20px의 차이가 있다. 
+em 단위를 쓴 p의 폰트 사이즈는 html의 10px을 div에서 2em으로 10px * 2 = 20px이 되었고 이것을 기준으로 20px * 1 = 20px이 되었다. 
+rem 단위를 쓴 p의 폰트 사이즈는 html의 10px을 div에서 2em으로 10px * 2 = 20px이 되었지만 루트 엘리먼트가 기준이므로 10px * 1 = 10px이 되었다.
+
+## 인디브도트 블로그에 적용하기
+
+### em을 사용해서 글자 크기를 지정하는 방법
+
+[em을 사용해서 글자 크기를 지정하는 방법](http://clagnut.com/blog/348/){:target="_blank"}이라는 글을 보면, 퍼센트를 이용해서 body의 기본 글자 크기를 고치는 방법을 설명한다. `body { font-size : 62.5% }`로 16px이던 폰트 사이즈를 계산하기 쉬운 10px로 변환하여 사용한다. 하지만 rem은 루트 엘리먼트 기준이기 때문에 `html { font-size : 62.5% }`로 루트 엘리먼트의 폰트 사이즈를 10px로 바꿔 사용하였다.
+
+하지만 이렇게 사용하다가 문제가 생겼다. 모바일에서는 1.4rem으로 폰트 사이즈를 14px로 하고, 데스크탑에서는 폰트사이즈를 16px로 사용하려고 하였는데, body의 1.4rem을 유지하면서 html안의 폰트 사이즈를 %로  계산하기가 너무 힘들었다. 그래서 그냥 모바일에서는 html `{font-size : 10px}` 데스크탑에서는 html `{font-size : 12px}`로 바꾸어 사용하였다. 그럼 P의 폰트사이즈는 모바일에서 14px, 데스크탑에서는 16.8px이 되어 뷰포트에 맞는 유동적 디자인을 하였다. 
+						
+그리고 평소에 사용하던 px대신에 margin, padding에 rem 단위를 썼다.
+
+### 미디어쿼리에 rem 적용?
+
+rem을 미디어쿼리에도 적용해 보고싶었다. 브레이크 포인트 중 하나를 980px로 잡았기 때문에 `@media(min-width:98rem){...}`로 작성하였다. 하지만 내가 의도한대로 동작되지 않았다. 뷰포트 980px이 아니라 뷰포트가 1568px이 되었을때 동작하였다. 이유가 무엇인지 [미디어쿼리 스펙](https://drafts.csswg.org/mediaqueries/#media){:target="_blank"}에서 찾아볼 수 있었다.
+
+>Media queries are (almost) always independent of the contents of the document, its styling, or any other internal aspect; they’re only dependent on “external” information unless another feature explicitly specifies that it affects the resolution of Media Queries, such as the @viewport rule.
+
+미디어 쿼리는 문서의 스타일 또는 내부의 기타 형태의 콘텐츠와는 무관하다는 내용이 있다. 나는 `html {font-size:62.5%}`로 1em을 10px로 바꾸어 주었지만, html의 글꼴 크기 스타일과 상관없이 1em은 여전히 16px이기 때문에 980px이 아니라 16px * 98 = 1568px에 미디어쿼리가 동작된 것이다. 
+
+## 결론
+
+rem으로 디자인하기를 목표로 삼고 제작하면서 많은 혼란이 있었다. 요즘엔 브라우저에서 확대 축소 기능이 다 제공되기 때문에 em, rem을 쓰는 것이 효율성이 있는것인지.. 비율로 생각하기 보다는 px로 생각하는 버릇이 많이 남아 있어서 그런것 같기도 하고.. 아니면 내가 아직 상대적 길이 단위에 대한 이해가 부족한 것 같다. 어떤 단위를 이용하고 설계하는 것이 최적의 디자인을 할 수 있는지에 대한 고민은 끝이 없는 것 같다. 
+
+## 참조 또는 더 알아보기
+{: .reference}
+
+- [당신은 모를 수도 있는 CSS의 7가지 단위](http://webdesign.tutsplus.com/ko/articles/7-css-units-you-might-not-know-about--cms-22573){:target="_blank"}
+- [em 그리고 Em, 언제 써야 할까](http://webdesign.tutsplus.com/ko/tutorials/comprehensive-guide-when-to-use-em-vs-rem--cms-23984){:target="_blank"}
+- [rem으로 글자 크기 지정하기](http://mytory.net/archives/8906){:target="_blank"}
+{: .reference-list}
