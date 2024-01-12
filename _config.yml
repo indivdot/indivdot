@@ -5,17 +5,6 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'jekyll serve'. If you change this file, please restart the server process.
 
-# Site settings
-title: 인디브도트 블로그 
-email: indivdot@gmail.com
-description: > # this means to ignore newlines until "baseurl:"
-  인디브도트의 블로그입니다.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "indivdot.github.io" # the base hostname & protocol for your site
-twitter_username: 
-github_username: indivdot
-
-# Build settings
-markdown: kramdown
-
 theme: jekyll-theme-minimal
+title: 인디브도트 블로그 
+description: 인디브도트의 블로그입니다.
